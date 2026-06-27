@@ -163,31 +163,33 @@
       </ul>
     </div>
     <div class="desafio__viz reveal" data-reveal>
-      <svg viewBox="0 0 480 480" class="orbit" aria-hidden="true">
-        <defs>
-          <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#8B2BA8"/>
-            <stop offset="100%" stop-color="#5A006E"/>
-          </linearGradient>
-        </defs>
-        <g class="orbit__rings">
-          <circle cx="240" cy="240" r="80"/>
-          <circle cx="240" cy="240" r="140"/>
-          <circle cx="240" cy="240" r="200"/>
-        </g>
-        <circle class="orbit__core" cx="240" cy="240" r="46"/>
-        <text x="240" y="236" text-anchor="middle" class="orbit__core-l1">SUPERVISÃO</text>
-        <text x="240" y="254" text-anchor="middle" class="orbit__core-l2">AMBIENTAL</text>
-        <g class="orbit__nodes">
-          <g class="onode" style="--a:0"><circle r="9"/><text>Licenças</text></g>
-          <g class="onode" style="--a:51"><circle r="9"/><text>Fauna</text></g>
-          <g class="onode" style="--a:102"><circle r="9"/><text>Flora</text></g>
-          <g class="onode" style="--a:153"><circle r="9"/><text>Resíduos</text></g>
-          <g class="onode" style="--a:204"><circle r="9"/><text>Recursos Hídricos</text></g>
-          <g class="onode" style="--a:255"><circle r="9"/><text>Comunidades</text></g>
-          <g class="onode" style="--a:306"><circle r="9"/><text>Condicionantes</text></g>
-        </g>
-      </svg>
+      <div class="constel" id="constel">
+        <svg viewBox="0 0 480 480" class="constel__svg" role="group" aria-label="Constelação da Supervisão Ambiental — dimensões integradas">
+          <defs>
+            <radialGradient id="coreGrad" cx="50%" cy="42%" r="62%">
+              <stop offset="0%" stop-color="#8B2BA8"/>
+              <stop offset="100%" stop-color="#5A006E"/>
+            </radialGradient>
+          </defs>
+          <g class="constel__rings" aria-hidden="true">
+            <circle cx="240" cy="240" r="80"/>
+            <circle cx="240" cy="240" r="140"/>
+            <circle cx="240" cy="240" r="200"/>
+          </g>
+          <line class="constel__link" id="constelLink" x1="240" y1="240" x2="240" y2="240" aria-hidden="true"/>
+          <circle class="constel__pulse" cx="240" cy="240" r="46" aria-hidden="true"/>
+          <circle class="constel__core" cx="240" cy="240" r="46"/>
+          <text x="240" y="236" text-anchor="middle" class="constel__core-l1">SUPERVISÃO</text>
+          <text x="240" y="254" text-anchor="middle" class="constel__core-l2">AMBIENTAL</text>
+          <g class="constel__nodes" id="constelNodes"><!-- nós gerados via JS --></g>
+        </svg>
+        <div class="constel__panel" id="constelPanel" aria-live="polite">
+          <span class="constel__panel-k"><i class="constel__panel-mk"></i> Dimensão da supervisão</span>
+          <h3 class="constel__panel-t" id="constelTitle">Sistema integrado</h3>
+          <p class="constel__panel-d" id="constelDesc">Passe o mouse, toque ou navegue pelos temas: cada dimensão ambiental é acompanhada de forma contínua e converge para a supervisão.</p>
+          <span class="constel__panel-link">Converge para a <b>Supervisão Ambiental</b></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -652,6 +654,18 @@
     <span>DNIT · Amazonas</span>
   </div>
 </footer>
+
+<!-- ====== NAVEGAÇÃO POR SEÇÕES (deck) ====== -->
+<ol class="secrail" id="secrail" aria-label="Capítulos da apresentação"><!-- gerado via JS --></ol>
+<div class="secnav" id="secnav" role="group" aria-label="Navegação entre seções">
+  <button class="secnav__btn secnav__prev" id="secPrev" aria-label="Seção anterior">
+    <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <span class="secnav__count" aria-hidden="true"><b id="secCur">01</b><i>/</i><span id="secTot">10</span></span>
+  <button class="secnav__btn secnav__next" id="secNext" aria-label="Próxima seção">
+    <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</div>
 
 <script src="assets/js/qrcode.min.js"></script>
 <script src="assets/js/main.js"></script>

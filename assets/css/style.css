@@ -170,7 +170,9 @@ ul,ol{list-style:none}
 .btn--outline:hover{border-color:var(--roxo);color:var(--roxo)}
 .btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-.hero__scroll{position:absolute;bottom:26px;right:var(--pad);display:flex;flex-direction:column;align-items:center;gap:10px;color:#bdb4c8}
+/* indicador antigo de scroll: substituído pelo deck navigator (evita colisão/redundância) */
+.hero__scroll{display:none}
+.hero__scroll--legacy{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:#bdb4c8}
 .hero__scroll-line{width:1px;height:44px;background:linear-gradient(var(--roxo-300),transparent);position:relative;overflow:hidden}
 .hero__scroll-line::after{content:"";position:absolute;top:0;left:0;width:100%;height:40%;background:var(--roxo-200,#caa9d8);
   animation:scrollPulse 2.2s var(--ease) infinite}
@@ -181,6 +183,7 @@ ul,ol{list-style:none}
    SECTION SHELL
    ===================================================== */
 .section{position:relative;padding:clamp(72px,11vh,150px) 0}
+section[id]{scroll-margin-top:90px}
 .section--paper{background:var(--paper)}
 .section--white{background:var(--white)}
 .section--lav{background:linear-gradient(180deg,var(--lav-2),var(--paper))}
@@ -240,17 +243,44 @@ ul,ol{list-style:none}
   background:var(--roxo)}
 .desafio__list strong{color:var(--ink);font-weight:600}
 .desafio__viz{display:flex;justify-content:center}
-.orbit{width:100%;max-width:460px;overflow:visible}
-.orbit__rings circle{stroke:var(--line);stroke-dasharray:3 7;fill:none}
-.orbit__core{fill:url(#coreGrad);filter:drop-shadow(0 14px 30px rgba(90,0,110,.25))}
-.orbit__core-l1,.orbit__core-l2{font-family:var(--f-display);fill:#fff;font-weight:600;letter-spacing:.06em}
-.orbit__core-l1{font-size:11px;letter-spacing:.02em}.orbit__core-l2{font-size:10px;fill:var(--roxo-100)}
-.onode{transform:translate(240px,240px) rotate(calc(var(--a)*1deg)) translateX(140px) rotate(calc(var(--a)*-1deg))}
-.onode circle{fill:var(--white);stroke:var(--roxo-300);stroke-width:2}
-.onode:nth-child(odd) circle{stroke:var(--green)}
-.onode text{font-family:var(--f-mono);font-size:10.5px;fill:var(--ink-2);text-anchor:middle;transform:translateY(-15px)}
-.is-visible .orbit__rings{animation:spin 70s linear infinite}
-@keyframes spin{to{transform:rotate(360deg);transform-origin:240px 240px}}
+
+/* Constelação da Supervisão Ambiental */
+.constel{display:flex;flex-direction:column;gap:18px;align-items:center;width:100%}
+.constel__svg{width:100%;max-width:430px;overflow:visible}
+.constel__rings circle{fill:none;stroke:var(--line);stroke-dasharray:3 7}
+.constel__rings{transform-origin:240px 240px;animation:constelSpin 95s linear infinite}
+@keyframes constelSpin{to{transform:rotate(360deg)}}
+.constel__pulse{fill:var(--roxo);opacity:.16;transform-origin:240px 240px;animation:corePulse 3.6s var(--ease) infinite}
+@keyframes corePulse{0%,100%{transform:scale(1);opacity:.16}55%{transform:scale(1.42);opacity:0}}
+.constel__core{fill:url(#coreGrad);filter:drop-shadow(0 12px 28px rgba(90,0,110,.35))}
+.constel__core-l1{font-family:var(--f-display);font-size:11px;font-weight:600;fill:#fff;letter-spacing:.02em}
+.constel__core-l2{font-family:var(--f-display);font-size:10px;font-weight:600;fill:var(--roxo-100);letter-spacing:.04em}
+.constel__link{stroke:var(--roxo);stroke-width:2;opacity:0;stroke-dasharray:5 6;transition:opacity .45s var(--ease)}
+.constel__link.on{opacity:.65;animation:linkDash 1.1s linear infinite}
+@keyframes linkDash{to{stroke-dashoffset:-11}}
+
+.cnode{cursor:pointer;outline:none;transition:opacity .4s var(--ease)}
+.cnode__hit{fill:transparent}
+.cnode__dot{fill:var(--white);stroke:var(--roxo-300);stroke-width:2;transition:r .35s var(--ease),fill .35s var(--ease),stroke .35s var(--ease)}
+.cnode:nth-child(even) .cnode__dot{stroke:var(--green)}
+.cnode__lbl{font-family:var(--f-mono);font-size:10.5px;fill:var(--ink-2);text-anchor:middle;transition:.35s var(--ease)}
+.constel.has-active .cnode{opacity:.38}
+.constel.has-active .cnode.is-active{opacity:1}
+.cnode.is-active .cnode__dot{fill:var(--roxo);stroke:var(--roxo);r:8.5;filter:drop-shadow(0 0 9px rgba(138,43,168,.55))}
+.cnode.is-active .cnode__lbl{fill:var(--roxo);font-weight:600}
+.cnode:focus-visible .cnode__dot{stroke:var(--ink);stroke-width:3;r:8.5}
+
+.constel__panel{width:100%;max-width:430px;background:var(--white);border:1px solid var(--roxo-100);
+  border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-sm);min-height:120px}
+.constel__panel-k{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.constel__panel-mk{width:9px;height:9px;border-radius:50%;background:var(--green);flex:none;transition:background .35s var(--ease)}
+.constel__panel-t{font-family:var(--f-display);font-size:19px;color:var(--roxo);font-weight:700;margin-bottom:6px;line-height:1.15}
+.constel__panel-d{font-size:13.5px;color:var(--ink-2);line-height:1.55;margin-bottom:10px}
+.constel__panel-link{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.constel__panel-link b{color:var(--green-deep)}
+.constel__panel.swap{animation:panelSwap .5s var(--ease)}
+@keyframes panelSwap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* =====================================================
    ECOSSISTEMA / FLOW
@@ -560,6 +590,36 @@ ul,ol{list-style:none}
   padding:22px var(--pad);border-top:1px solid rgba(255,255,255,.08);font-family:var(--f-mono);font-size:11.5px;color:#7d748a}
 
 /* =====================================================
+   NAVEGAÇÃO POR SEÇÕES (deck navigator)
+   ===================================================== */
+/* Trilha vertical de capítulos (desktop) */
+.secrail{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:11px}
+.secrail__item{display:flex;align-items:center;gap:10px;flex-direction:row-reverse;background:none;border:0;cursor:pointer;padding:3px}
+.secrail__dot{width:9px;height:9px;border-radius:50%;background:var(--line);transition:.3s var(--ease)}
+.secrail__item:hover .secrail__dot{background:var(--roxo-300)}
+.secrail__item.active .secrail__dot{background:var(--roxo);transform:scale(1.5);box-shadow:0 0 0 4px var(--lav)}
+.secrail__lbl{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em;color:var(--ink-2);
+  background:var(--white);border:1px solid var(--line-soft);padding:4px 9px;border-radius:7px;box-shadow:var(--shadow-xs);
+  opacity:0;transform:translateX(8px);transition:.3s var(--ease);pointer-events:none;white-space:nowrap}
+.secrail__item:hover .secrail__lbl,.secrail__item:focus-visible .secrail__lbl{opacity:1;transform:none}
+.secrail__item:focus-visible{outline:2px solid var(--roxo);outline-offset:3px;border-radius:6px}
+
+/* Controle compacto (prev / índice / próxima) */
+.secnav{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.86);border:1px solid var(--line-soft);border-radius:100px;padding:6px;
+  box-shadow:var(--shadow-md);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.secnav__btn{width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;
+  background:var(--lav);color:var(--roxo);transition:.25s var(--ease)}
+.secnav__btn:hover:not(:disabled){background:var(--roxo);color:#fff}
+.secnav__btn:disabled{opacity:.32;cursor:default}
+.secnav__btn:focus-visible{outline:2px solid var(--roxo);outline-offset:2px}
+.secnav__btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.secnav__next.is-home{background:var(--roxo);color:#fff}
+.secnav__count{font-family:var(--f-mono);font-size:12px;color:var(--ink);min-width:46px;text-align:center;letter-spacing:.03em}
+.secnav__count b{color:var(--roxo);font-weight:600}
+.secnav__count i{color:var(--muted);font-style:normal;margin:0 2px}
+
+/* =====================================================
    REVEAL / MOTION
    ===================================================== */
 .reveal,[data-reveal]{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -571,12 +631,15 @@ ul,ol{list-style:none}
 @media (prefers-reduced-motion:reduce){
   .reveal,[data-reveal],.hero__title .line{opacity:1!important;transform:none!important;transition:none!important}
   .hero__media img{animation:none;transform:none}
-  .gis__pt .ring,.is-visible .orbit__rings{animation:none}
+  .gis__pt .ring,.constel__rings,.constel__pulse,.constel__link.on,.loader__bar span{animation:none}
 }
 
 /* =====================================================
    RESPONSIVE
    ===================================================== */
+@media (max-width:1180px){
+  .secrail{display:none} /* trilha vertical só em telas largas */
+}
 @media (max-width:1024px){
   .stats-primary{grid-template-columns:repeat(3,1fr)}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
@@ -611,4 +674,8 @@ ul,ol{list-style:none}
   .cta__panel{grid-template-columns:1fr;text-align:center}
   .cta__qr{margin:0 auto}
   .cta__contacts span{justify-content:center}
+  /* controle de seções compacto no celular */
+  .secnav{right:14px;bottom:14px;padding:5px;gap:4px}
+  .secnav__btn{width:34px;height:34px}
+  .secnav__count{min-width:40px;font-size:11px}
 }

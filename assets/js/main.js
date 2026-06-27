@@ -146,6 +146,171 @@
   document.querySelectorAll('section[id]').forEach(function (s) { spy.observe(s); });
 
   /* =================================================================
+     CONSTELAÇÃO DA SUPERVISÃO AMBIENTAL (seção Desafio)
+     Órbita viva: auto-ciclo + hover/foco/toque + linha ao núcleo + painel
+     ================================================================= */
+  (function () {
+    var nodesG = document.getElementById('constelNodes');
+    if (!nodesG) return;
+    var constel = document.getElementById('constel');
+    var link = document.getElementById('constelLink');
+    var panel = document.getElementById('constelPanel');
+    var pMk = panel.querySelector('.constel__panel-mk');
+    var pTitle = document.getElementById('constelTitle');
+    var pDesc = document.getElementById('constelDesc');
+    var NS = 'http://www.w3.org/2000/svg';
+    var CX = 240, CY = 240, R = 140;
+    var THEMES = [
+      ['Comunidades', 'Relacionamento territorial, comunicação social e acompanhamento de impactos sobre populações lindeiras.'],
+      ['Condicionantes', 'Monitoramento de obrigações ambientais, prazos, evidências e conformidade.'],
+      ['Licenças', 'Acompanhamento de licenças, autorizações, renovações e documentos ambientais.'],
+      ['Fauna', 'Registros, ocorrências, monitoramentos e medidas de proteção à fauna.'],
+      ['Flora', 'Acompanhamento de áreas vegetadas, supressão, recuperação e medidas de controle.'],
+      ['Resíduos', 'Gestão, segregação, armazenamento, destinação e evidências de conformidade.'],
+      ['Recursos Hídricos', 'Controle de interferências, drenagem, corpos hídricos, outorgas e medidas preventivas.']
+    ];
+    var nodes = [], coords = [], active = -1, paused = false, resumeT = null;
+
+    THEMES.forEach(function (t, i) {
+      var ang = (-90 + i * (360 / THEMES.length)) * Math.PI / 180;
+      var x = CX + R * Math.cos(ang), y = CY + R * Math.sin(ang);
+      coords.push([x, y]);
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'cnode');
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', t[0] + ': ' + t[1]);
+      var hit = document.createElementNS(NS, 'circle');
+      hit.setAttribute('class', 'cnode__hit'); hit.setAttribute('cx', x); hit.setAttribute('cy', y); hit.setAttribute('r', 26);
+      var dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('class', 'cnode__dot'); dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('r', 6);
+      var lx = CX + (R + 22) * Math.cos(ang), ly = CY + (R + 22) * Math.sin(ang) + 3;
+      var lbl = document.createElementNS(NS, 'text');
+      lbl.setAttribute('class', 'cnode__lbl'); lbl.setAttribute('x', lx); lbl.setAttribute('y', ly);
+      lbl.setAttribute('text-anchor', lx < CX - 12 ? 'end' : (lx > CX + 12 ? 'start' : 'middle'));
+      lbl.textContent = t[0];
+      g.appendChild(hit); g.appendChild(dot); g.appendChild(lbl);
+      nodesG.appendChild(g);
+      nodes.push(g);
+      g.addEventListener('mouseenter', function () { setActive(i, true); });
+      g.addEventListener('focus', function () { setActive(i, true); });
+      g.addEventListener('click', function () { setActive(i, true); });
+      g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(i, true); }
+      });
+    });
+
+    constel.addEventListener('mouseleave', function () { paused = false; clearTimeout(resumeT); });
+
+    function setActive(i, userInitiated) {
+      active = i;
+      constel.classList.add('has-active');
+      nodes.forEach(function (n, j) { n.classList.toggle('is-active', j === i); });
+      var c = coords[i];
+      link.setAttribute('x2', c[0]); link.setAttribute('y2', c[1]); link.classList.add('on');
+      pTitle.textContent = THEMES[i][0];
+      pDesc.textContent = THEMES[i][1];
+      panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+      if (userInitiated) {
+        paused = true; clearTimeout(resumeT);
+        resumeT = setTimeout(function () { paused = false; }, 6000);
+      }
+    }
+
+    if (!reduceMotion) {
+      var ai = 0;
+      setTimeout(function () { if (!paused) setActive(0, false); }, 800);
+      setInterval(function () {
+        if (paused) return;
+        ai = (ai + 1) % THEMES.length;
+        setActive(ai, false);
+      }, 2800);
+    }
+  })();
+
+  /* =================================================================
+     NAVEGAÇÃO POR SEÇÕES (deck): trilha + controle + teclado
+     ================================================================= */
+  (function () {
+    var CH = [
+      ['hero', 'Hero'], ['indicadores', 'Indicadores'], ['desafio', 'Desafio'],
+      ['ecossistema', 'Ecossistema'], ['profras', 'PROFAS'], ['painel', 'Painel Ambiental'],
+      ['campo', 'Ações em Campo'], ['mapa', 'Mapa'], ['biblioteca', 'Biblioteca'], ['encerramento', 'Encerramento']
+    ];
+    var els = CH.map(function (c) { return document.getElementById(c[0]); });
+    var rail = document.getElementById('secrail');
+    var prevBtn = document.getElementById('secPrev');
+    var nextBtn = document.getElementById('secNext');
+    var curEl = document.getElementById('secCur');
+    var totEl = document.getElementById('secTot');
+    if (!els[0] || !prevBtn) return;
+    var OFFSET = 90, N = CH.length, cur = -1;
+    var ICON_DOWN = '<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+    var ICON_HOME = '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>';
+    totEl.textContent = ('0' + N).slice(-2);
+
+    CH.forEach(function (c, i) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.className = 'secrail__item';
+      b.setAttribute('aria-label', 'Ir para ' + c[1]);
+      b.innerHTML = '<span class="secrail__lbl">' + c[1] + '</span><span class="secrail__dot"></span>';
+      b.addEventListener('click', function () { go(i); });
+      li.appendChild(b); rail.appendChild(li);
+    });
+    var railBtns = rail.querySelectorAll('.secrail__item');
+
+    function go(i) {
+      i = Math.max(0, Math.min(N - 1, i));
+      var el = els[i]; if (!el) return;
+      var top = i === 0 ? 0 : el.getBoundingClientRect().top + window.scrollY - OFFSET;
+      window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    function render() {
+      curEl.textContent = ('0' + (cur + 1)).slice(-2);
+      prevBtn.disabled = cur === 0;
+      railBtns.forEach(function (b, i) { b.classList.toggle('active', i === cur); });
+      if (cur === N - 1) {
+        nextBtn.classList.add('is-home'); nextBtn.innerHTML = ICON_HOME;
+        nextBtn.setAttribute('aria-label', 'Voltar ao início');
+      } else {
+        nextBtn.classList.remove('is-home'); nextBtn.innerHTML = ICON_DOWN;
+        nextBtn.setAttribute('aria-label', 'Próxima seção');
+      }
+    }
+    function compute() {
+      var sy = window.scrollY, vh = window.innerHeight, idx = 0;
+      if (sy + vh >= document.documentElement.scrollHeight - 4) { idx = N - 1; }
+      else {
+        for (var i = 0; i < N; i++) {
+          var el = els[i]; if (!el) continue;
+          if (el.getBoundingClientRect().top + sy <= sy + OFFSET + 8) idx = i;
+        }
+      }
+      if (idx !== cur) { cur = idx; render(); }
+    }
+    prevBtn.addEventListener('click', function () { go(cur - 1); });
+    nextBtn.addEventListener('click', function () { cur === N - 1 ? go(0) : go(cur + 1); });
+    window.addEventListener('scroll', compute, { passive: true });
+    window.addEventListener('resize', compute);
+    compute();
+
+    document.addEventListener('keydown', function (e) {
+      var t = e.target, tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
+      var k = e.key;
+      if (k === 'PageDown') { e.preventDefault(); go(cur + 1); }
+      else if (k === 'PageUp') { e.preventDefault(); go(cur - 1); }
+      else if (k === 'Home') { e.preventDefault(); go(0); }
+      else if (k === 'End') { e.preventDefault(); go(N - 1); }
+      else if (k === 'ArrowDown' || k === 'ArrowUp') {
+        if (tag === 'BUTTON' || tag === 'A' || (t && t.getAttribute && t.getAttribute('tabindex') !== null)) return;
+        e.preventDefault(); go(k === 'ArrowDown' ? cur + 1 : cur - 1);
+      }
+    });
+  })();
+
+  /* =================================================================
      QR CODE — gerador real (qrcode-generator embutido)
      ================================================================= */
   var CONFIG = { url: 'https://consorciomatupiri.com.br/#biblioteca' };

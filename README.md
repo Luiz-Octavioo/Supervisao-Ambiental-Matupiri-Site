@@ -31,7 +31,8 @@ Ritmo claro→escuro: hero cinematográfico → 4 seções claras → Painel esc
 ```
 index.html                 → marcação e conteúdo de todas as seções
 assets/css/style.css       → design system completo (cores, tipografia, animações)
-assets/js/main.js          → loader, reveals, parallax, contadores, painel, mapa, QR Code
+assets/js/main.js          → loader, reveals, parallax, contadores, painel, mapa, QR Code,
+                             constelação interativa (Desafio) e navegação por seções (deck)
 assets/js/qrcode.min.js    → gerador de QR Code (offline, MIT — Kazuhiko Arase)
 assets/img/logo-matupiri.jpeg → logomarca oficial
 assets/img/generated/      → imagens institucionais geradas via Higgsfield MCP (substituíveis)
