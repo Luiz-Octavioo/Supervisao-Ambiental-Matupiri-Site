@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#F8F6F2" />
+<title>Supervisão Ambiental Rodoviária — Consórcio Matupiri</title>
+<meta name="description" content="Supervisão Ambiental Rodoviária do Consórcio Matupiri: monitoramento, inteligência ambiental e apoio à fiscalização aplicados à infraestrutura rodoviária federal na Amazônia, em apoio ao DNIT." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ====== LOADER ====== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <img src="assets/img/logo-matupiri.jpeg" alt="" style="height:46px;border-radius:8px" />
+    <div class="loader__bar"><span></span></div>
+    <div class="loader__txt">Supervisão Ambiental Rodoviária</div>
+  </div>
+</div>
+
+<!-- ====== PROGRESS ====== -->
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+<!-- ====== NAV ====== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#hero" aria-label="Consórcio Matupiri — início">
+      <img src="assets/img/logo-matupiri.jpeg" alt="Consórcio Matupiri" />
+    </a>
+    <nav class="nav__links" aria-label="Navegação principal">
+      <a href="#indicadores">Indicadores</a>
+      <a href="#ecossistema">Ecossistema</a>
+      <a href="#profras">PROFAS</a>
+      <a href="#painel">Painel</a>
+      <a href="#campo">Campo</a>
+      <a href="#mapa">Mapa</a>
+      <a href="#biblioteca">Biblioteca</a>
+    </nav>
+    <a href="#biblioteca" class="nav__cta">Biblioteca Digital</a>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="hero">
+  <div class="hero__media" aria-hidden="true">
+    <img src="assets/img/generated/hero-amazonia-teste.png" alt="" fetchpriority="high" />
+  </div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="hero__grid" aria-hidden="true"></div>
+
+  <div class="hero__content">
+    <p class="eyebrow hero__eyebrow reveal" data-reveal>
+      <span class="dot"></span> Consórcio Matupiri · DNIT · Amazonas
+    </p>
+    <h1 class="hero__title">
+      <span class="line" data-reveal>Supervisão Ambiental</span>
+      <span class="line" data-reveal><em>Rodoviária</em></span>
+    </h1>
+    <p class="hero__subtitle reveal" data-reveal>
+      Monitoramento, inteligência ambiental e apoio à fiscalização aplicados à
+      infraestrutura rodoviária federal na Amazônia.
+    </p>
+    <p class="hero__support reveal" data-reveal>
+      Uma plataforma digital para integrar campo, documentos, indicadores, mapas e
+      evidências ambientais em apoio à fiscalização do DNIT.
+    </p>
+    <div class="hero__actions reveal" data-reveal>
+      <a href="#ecossistema" class="btn btn--primary">Conhecer a supervisão</a>
+      <a href="#biblioteca" class="btn btn--ghost">Biblioteca Digital</a>
+    </div>
+    <div class="hero__seal reveal" data-reveal>
+      <span><b>Consórcio Matupiri</b></span>
+      <span class="sep"></span>
+      <span>DNIT</span>
+      <span class="sep"></span>
+      <span>Amazonas · Brasil</span>
+    </div>
+  </div>
+
+  <a href="#indicadores" class="hero__scroll" aria-label="Rolar para baixo">
+    <span class="hero__scroll-label">Role para explorar</span>
+    <span class="hero__scroll-line"></span>
+  </a>
+</section>
+
+<!-- ====== INDICADORES ====== -->
+<section class="section section--paper section--grid" id="indicadores">
+  <div class="container">
+    <header class="sec-head reveal" data-reveal>
+      <span class="kicker">Panorama <span class="coord">/ 01</span></span>
+      <h2 class="sec-title">A dimensão da <span class="hl">supervisão ambiental</span></h2>
+      <p class="sec-lead">A supervisão ambiental do Consórcio Matupiri abrange uma malha rodoviária
+      federal extensa, traduzida em números que expressam a escala da operação.</p>
+    </header>
+
+    <!-- Indicadores principais -->
+    <div class="stats-primary">
+      <div class="stat stat--feat reveal" data-reveal>
+        <div class="stat__ico"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6"/></svg></div>
+        <div class="stat__num"><span data-count="6">0</span></div>
+        <div class="stat__label">Contratos supervisionados</div>
+      </div>
+      <div class="stat stat--feat reveal" data-reveal>
+        <div class="stat__ico"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h12a1 1 0 0 1 1 1v15M6 17h13M9 7h6M9 11h6"/></svg></div>
+        <div class="stat__num"><span data-count="14">0</span></div>
+        <div class="stat__label">Licenças ambientais acompanhadas</div>
+      </div>
+      <div class="stat stat--feat reveal" data-reveal>
+        <div class="stat__ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="stat__num"><span data-count="320">0</span><span class="stat__unit">+</span></div>
+        <div class="stat__label">Condicionantes monitoradas</div>
+      </div>
+    </div>
+
+    <!-- Indicadores secundários -->
+    <div class="stats-grid">
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="48">0</span></div>
+        <div class="stat__label">Campanhas ambientais registradas</div>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="190">0</span><span class="stat__unit">+</span></div>
+        <div class="stat__label">Relatórios técnicos emitidos</div>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="72">0</span></div>
+        <div class="stat__label">Jazidas e áreas de apoio acompanhadas</div>
+      </div>
+      <div class="stat stat--eco reveal" data-reveal>
+        <div class="stat__num"><span data-count="9">0</span><span class="stat__unit">K+</span></div>
+        <div class="stat__label">Registros fotográficos georreferenciados</div>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="1280">0</span><span class="stat__unit">km</span></div>
+        <div class="stat__label">Extensão rodoviária monitorada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== O DESAFIO ====== -->
+<section class="section section--white" id="desafio">
+  <div class="container container--split">
+    <div class="desafio__text reveal" data-reveal>
+      <span class="kicker">O Desafio <span class="coord">/ 02</span></span>
+      <h2 class="sec-title">A complexidade da <span class="hl">supervisão ambiental</span></h2>
+      <p class="sec-lead">Supervisionar obras rodoviárias na Amazônia exige integrar informações de
+      campo, licenças, condicionantes, comunidades, recursos hídricos, fauna, flora, resíduos, jazidas,
+      canteiros e relatórios técnicos em um processo contínuo de acompanhamento e apoio à fiscalização.</p>
+      <ul class="desafio__list">
+        <li><strong>Dispersão de dados</strong> entre contratos, órgãos e equipes de campo.</li>
+        <li><strong>Volume documental</strong> elevado e em constante atualização.</li>
+        <li><strong>Rastreabilidade</strong> exigida por DNIT, IBAMA e demais órgãos.</li>
+        <li><strong>Tempo de resposta</strong> crítico para a conformidade ambiental.</li>
+      </ul>
+    </div>
+    <div class="desafio__viz reveal" data-reveal>
+      <svg viewBox="0 0 480 480" class="orbit" aria-hidden="true">
+        <defs>
+          <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8B2BA8"/>
+            <stop offset="100%" stop-color="#5A006E"/>
+          </linearGradient>
+        </defs>
+        <g class="orbit__rings">
+          <circle cx="240" cy="240" r="80"/>
+          <circle cx="240" cy="240" r="140"/>
+          <circle cx="240" cy="240" r="200"/>
+        </g>
+        <circle class="orbit__core" cx="240" cy="240" r="46"/>
+        <text x="240" y="236" text-anchor="middle" class="orbit__core-l1">SUPERVISÃO</text>
+        <text x="240" y="254" text-anchor="middle" class="orbit__core-l2">AMBIENTAL</text>
+        <g class="orbit__nodes">
+          <g class="onode" style="--a:0"><circle r="9"/><text>Licenças</text></g>
+          <g class="onode" style="--a:51"><circle r="9"/><text>Fauna</text></g>
+          <g class="onode" style="--a:102"><circle r="9"/><text>Flora</text></g>
+          <g class="onode" style="--a:153"><circle r="9"/><text>Resíduos</text></g>
+          <g class="onode" style="--a:204"><circle r="9"/><text>Recursos Hídricos</text></g>
+          <g class="onode" style="--a:255"><circle r="9"/><text>Comunidades</text></g>
+          <g class="onode" style="--a:306"><circle r="9"/><text>Condicionantes</text></g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ECOSSISTEMA DE GOVERNANÇA ====== -->
+<section class="section section--paper section--grid" id="ecossistema">
+  <div class="container">
+    <header class="sec-head reveal" data-reveal>
+      <span class="kicker">Ecossistema <span class="coord">/ 03</span></span>
+      <h2 class="sec-title">Da supervisão em campo à <span class="hl">decisão técnica</span></h2>
+      <p class="sec-lead">Cada vistoria, registro fotográfico, condicionante e documento técnico alimenta
+      um fluxo integrado de supervisão ambiental, fortalecendo a rastreabilidade e a tomada de decisão
+      institucional.</p>
+    </header>
+
+    <div class="flow">
+      <svg class="flow__line" viewBox="0 0 1100 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="flow__path" d="M40,60 H1060" fill="none" stroke="#5A006E" stroke-width="2" stroke-dasharray="9 11"/>
+      </svg>
+      <ol class="flow__steps">
+        <li class="flow__step reveal" data-reveal>
+          <span class="flow__idx">01</span>
+          <span class="flow__icon"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+          <h3>Campo</h3>
+          <p>Vistorias, coletas e registros georreferenciados em tempo real.</p>
+        </li>
+        <li class="flow__step reveal" data-reveal>
+          <span class="flow__idx">02</span>
+          <span class="flow__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+          <h3>Painel Ambiental</h3>
+          <p>Centralização e qualificação dos dados em uma plataforma única.</p>
+        </li>
+        <li class="flow__step reveal" data-reveal>
+          <span class="flow__idx">03</span>
+          <span class="flow__icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+          <h3>PROFAS</h3>
+          <p>Aplicação metodológica e padronização das ações ambientais.</p>
+        </li>
+        <li class="flow__step reveal" data-reveal>
+          <span class="flow__idx">04</span>
+          <span class="flow__icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span>
+          <h3>Relatórios</h3>
+          <p>Sínteses técnicas e evidências para a tomada de decisão.</p>
+        </li>
+        <li class="flow__step reveal" data-reveal>
+          <span class="flow__idx">05</span>
+          <span class="flow__icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h.01M9 13h.01M15 9h.01M15 13h.01"/></svg></span>
+          <h3>DNIT</h3>
+          <p>Governança ambiental construída a partir de evidências, indicadores e inteligência técnica.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PROFAS ====== -->
+<section class="section section--lav" id="profras">
+  <div class="container container--split">
+    <div class="profras__viz reveal" data-reveal>
+      <img src="assets/img/generated/profras-bg.png" alt="Rodovia federal atravessando a floresta amazônica" />
+      <span class="profras__cover-note">Capa institucional · substituível</span>
+      <div class="profras__badge">
+        <span class="profras__badge-k">Programa</span>
+        <span class="profras__badge-t">PROFAS</span>
+        <span class="profras__badge-s">Programa de Rodovias Ambientalmente Sustentáveis</span>
+      </div>
+      <div class="profras__doc">
+        <a href="#biblioteca" class="btn btn--primary">Acessar documento PROFAS</a>
+        <small>PDF · em preparação</small>
+      </div>
+    </div>
+    <div class="profras__text reveal" data-reveal>
+      <span class="kicker">Metodologia <span class="coord">/ 04</span></span>
+      <h2 class="sec-title">Engenharia a serviço do <span class="hl">ambiente</span></h2>
+      <p class="sec-lead">O PROFAS organiza diretrizes e práticas ambientais aplicadas à supervisão
+      rodoviária, estruturando ações de diagnóstico, planejamento, execução, monitoramento e melhoria
+      contínua.</p>
+      <div class="profras__steps">
+        <div class="pstep"><span class="pstep__n">01</span><div><b>Diagnóstico</b><span>Leitura ambiental do território</span></div></div>
+        <div class="pstep"><span class="pstep__n">02</span><div><b>Planejamento</b><span>Definição de protocolos e metas</span></div></div>
+        <div class="pstep"><span class="pstep__n">03</span><div><b>Execução</b><span>Ações ambientais em campo</span></div></div>
+        <div class="pstep"><span class="pstep__n">04</span><div><b>Monitoramento</b><span>Acompanhamento contínuo</span></div></div>
+        <div class="pstep"><span class="pstep__n">05</span><div><b>Conformidade</b><span>Atendimento a condicionantes</span></div></div>
+        <div class="pstep"><span class="pstep__n">06</span><div><b>Rastreabilidade</b><span>Evidências documentais integradas</span></div></div>
+      </div>
+      <div class="profras__grid">
+        <div class="mini"><h4>Objetivo</h4><p>Reduzir passivos ambientais e elevar a conformidade ao longo de todo o ciclo da obra.</p></div>
+        <div class="mini"><h4>Integração</h4><p>Conexão direta com o Painel Ambiental e os relatórios técnicos ao DNIT.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PAINEL AMBIENTAL ====== -->
+<section class="section section--dark sec-painel" id="painel">
+  <div class="container">
+    <header class="sec-head sec-head--center reveal" data-reveal>
+      <span class="kicker">Plataforma <span class="coord">/ 05</span></span>
+      <h2 class="sec-title">Painel Ambiental</h2>
+      <p class="sec-lead sec-lead--big">Inteligência ambiental aplicada à supervisão rodoviária.</p>
+    </header>
+
+    <div class="painel__layout">
+      <div class="painel__copy reveal" data-reveal>
+        <h3>Um ambiente digital para centralizar licenças, condicionantes, jazidas, campanhas, registros de campo, mapas e relatórios técnicos.</h3>
+        <div class="painel__points">
+          <div class="ppoint">
+            <span class="ppoint__ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+            <div><b>Centraliza</b><span>Licenças, condicionantes, jazidas, campanhas, mapas e relatórios em um só lugar.</span></div>
+          </div>
+          <div class="ppoint">
+            <span class="ppoint__ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <div><b>Quem utiliza</b><span>Equipes de campo, coordenação ambiental do consórcio e gestores do DNIT.</span></div>
+          </div>
+          <div class="ppoint">
+            <span class="ppoint__ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg></span>
+            <div><b>Apoia a decisão</b><span>Indicadores e evidências consolidados aceleram respostas e priorização.</span></div>
+          </div>
+          <div class="ppoint">
+            <span class="ppoint__ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <div><b>Rastreabilidade</b><span>Histórico auditável de cada ação, com data, local e responsável.</span></div>
+          </div>
+        </div>
+        <span class="painel__shot-note">Área preparada para screenshots reais do sistema</span>
+      </div>
+
+      <div class="devices reveal" data-reveal>
+        <div class="device--tablet">
+          <div class="tablet__screen">
+            <div class="mini-dash">
+              <span class="md__title">Licenças</span>
+              <div class="md__row"><span>LI 02/2021</span><i class="ok"></i></div>
+              <div class="md__row"><span>LO 11/2022</span><i class="ok"></i></div>
+              <div class="md__row"><span>LP 07/2020</span><i class="warn"></i></div>
+              <div class="md__row"><span>Renovação</span><i class="ok"></i></div>
+              <div class="md__progress"><span style="--w:86%"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="device--laptop">
+          <div class="laptop__screen">
+            <div class="dash">
+              <div class="dash__top">
+                <span class="dash__brand">Painel Ambiental · Matupiri</span>
+                <span class="dash__pills"><i></i><i></i><i></i></span>
+              </div>
+              <div class="dash__body">
+                <aside class="dash__nav"><span class="on"></span><span></span><span></span><span></span><span></span></aside>
+                <div class="dash__screen">
+                  <!-- View 1: visão geral -->
+                  <div class="dash__view on">
+                    <div class="card"><span class="card__k">Conformidade</span><span class="card__v eco">94%</span>
+                      <div class="spark"><span style="--h:40%"></span><span style="--h:55%"></span><span style="--h:48%"></span><span style="--h:70%"></span><span style="--h:62%"></span><span style="--h:88%"></span><span style="--h:94%"></span></div></div>
+                    <div class="card"><span class="card__k">Condicionantes</span><span class="card__v">320</span>
+                      <div class="donut" style="--p:78"><span>78%</span></div></div>
+                    <div class="card"><span class="card__k">Campanhas por trecho</span>
+                      <div class="bars"><span style="--h:35%"></span><span style="--h:60%"></span><span style="--h:48%"></span><span style="--h:82%"></span><span style="--h:55%"></span><span style="--h:70%"></span><span style="--h:90%"></span><span style="--h:64%"></span></div></div>
+                    <div class="card"><span class="card__k">Áreas monitoradas</span>
+                      <div class="minimap"><span class="pin" style="left:22%;top:38%"></span><span class="pin" style="left:54%;top:30%"></span><span class="pin" style="left:70%;top:62%"></span><span class="pin eco" style="left:38%;top:66%"></span></div></div>
+                  </div>
+                  <!-- View 2: condicionantes -->
+                  <div class="dash__view">
+                    <div class="card card--list">
+                      <span class="card__k">Condicionantes em acompanhamento</span>
+                      <div class="row"><span>Recuperação de jazida JZ-14</span><i></i></div>
+                      <div class="row"><span>Monitoramento de fauna — T3</span><i></i></div>
+                      <div class="row"><span>Destinação de resíduos — canteiro 2</span><i class="warn"></i></div>
+                      <div class="row"><span>PRAD — área 07</span><i></i></div>
+                    </div>
+                    <div class="card"><span class="card__k">Prazos críticos</span><span class="card__v">7</span>
+                      <div class="spark"><span style="--h:80%"></span><span style="--h:50%"></span><span style="--h:65%"></span><span style="--h:40%"></span><span style="--h:55%"></span></div></div>
+                    <div class="card"><span class="card__k">Aderência</span><span class="card__v eco">91%</span>
+                      <div class="donut" style="--p:91"><span>91%</span></div></div>
+                  </div>
+                  <!-- View 3: relatórios -->
+                  <div class="dash__view">
+                    <div class="card"><span class="card__k">Relatórios emitidos</span><span class="card__v">190+</span>
+                      <div class="bars"><span style="--h:30%"></span><span style="--h:45%"></span><span style="--h:60%"></span><span style="--h:72%"></span><span style="--h:85%"></span><span style="--h:96%"></span></div></div>
+                    <div class="card"><span class="card__k">Jazidas ativas</span><span class="card__v">72</span>
+                      <div class="donut" style="--p:64"><span>64%</span></div></div>
+                    <div class="card card--list"><span class="card__k">Últimos registros</span>
+                      <div class="row"><span>Vistoria técnica — BR-319</span><i></i></div>
+                      <div class="row"><span>Campanha educativa — comunidade ribeirinha</span><i></i></div>
+                      <div class="row"><span>Reciclagem de pavimento — T2</span><i></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="laptop__base"></div>
+        </div>
+
+        <div class="device--phone">
+          <div class="phone__screen">
+            <span class="ph__notch"></span>
+            <div class="ph__head">Jazidas</div>
+            <div class="ph__stat"><b>72</b><small>ativas</small></div>
+            <div class="ph__list">
+              <span><i></i>Jazida JZ-14</span>
+              <span><i></i>Jazida JZ-22</span>
+              <span><i class="eco"></i>Recuperada JZ-08</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="painel__tags reveal" data-reveal>
+      <span>Dashboards</span><span>Licenças</span><span>Condicionantes</span>
+      <span>Jazidas</span><span>Mapas</span><span>Relatórios</span><span>Indicadores</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== AÇÕES EM CAMPO ====== -->
+<section class="section section--paper" id="campo">
+  <div class="container">
+    <header class="sec-head reveal" data-reveal>
+      <span class="kicker">Evidências <span class="coord">/ 06</span></span>
+      <h2 class="sec-title">Supervisão Ambiental em <span class="hl">Campo</span></h2>
+      <p class="sec-lead">A atuação ambiental se materializa no território. Cada vistoria, campanha,
+      registro e orientação técnica fortalece a fiscalização e gera evidências para a gestão institucional.</p>
+      <span class="campo__hint">⬡ Espaços reservados a <b>fotos reais do Consórcio Matupiri</b> — substituíveis sem alterar o layout.</span>
+    </header>
+
+    <div class="mosaic">
+      <article class="tile tile--xl reveal" data-reveal data-scene="recuperacao">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag">Recuperação ambiental</span>
+          <h3>Áreas degradadas em recuperação</h3>
+          <div class="tile__info"><span><i></i>BR-319 · Trecho 3</span><span><i></i>Contrato 04</span><span><i></i>2025</span></div>
+          <span class="tile__desc">Recomposição de cobertura vegetal e controle de processos erosivos em áreas afetadas pela obra, com acompanhamento técnico contínuo.</span>
+        </div>
+      </article>
+      <article class="tile reveal" data-reveal data-scene="campanha">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag">Monitoramento</span>
+          <h3>Fauna e flora</h3>
+          <div class="tile__info"><span><i></i>Trecho 2</span><span><i></i>2025</span></div>
+        </div>
+      </article>
+      <article class="tile reveal" data-reveal data-scene="residuos">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag eco">Gestão de resíduos</span>
+          <h3>Destinação correta</h3>
+          <div class="tile__info"><span><i></i>Canteiro 2</span><span><i></i>2025</span></div>
+        </div>
+      </article>
+      <article class="tile reveal" data-reveal data-scene="educacao">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag">Educação ambiental</span>
+          <h3>Engajamento de comunidades</h3>
+          <div class="tile__info"><span><i></i>Comunidades ribeirinhas</span></div>
+        </div>
+      </article>
+      <article class="tile tile--wide reveal" data-reveal data-scene="jazidas">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag">Jazidas · PRADs</span>
+          <h3>Controle e recuperação de áreas de apoio</h3>
+          <div class="tile__info"><span><i></i>72 áreas</span><span><i></i>Contratos 01–06</span></div>
+        </div>
+      </article>
+      <article class="tile reveal" data-reveal data-scene="pavimento">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag eco">Reciclagem</span>
+          <h3>Reaproveitamento de pavimento</h3>
+          <div class="tile__info"><span><i></i>Trecho 2</span></div>
+        </div>
+      </article>
+      <article class="tile reveal" data-reveal data-scene="fiscalizacao">
+        <div class="tile__ph"></div><div class="tile__shade"></div>
+        <span class="tile__repl">Inserir foto real</span>
+        <div class="tile__meta">
+          <span class="tile__tag">Fiscalização · Vistorias</span>
+          <h3>Apoio técnico à fiscalização</h3>
+          <div class="tile__info"><span><i></i>Multitrechos</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MAPA ====== -->
+<section class="section section--white section--grid" id="mapa">
+  <div class="container">
+    <header class="sec-head reveal" data-reveal>
+      <span class="kicker">Território <span class="coord">/ 07 · −3.10 S 60.02 W</span></span>
+      <h2 class="sec-title">Supervisão <span class="hl">geoespacial</span> no Amazonas</h2>
+      <p class="sec-lead">Contratos, trechos, jazidas, canteiros e áreas monitoradas integrados em uma
+      visão territorial da supervisão ambiental.</p>
+    </header>
+
+    <div class="gis reveal" data-reveal>
+      <div class="gis__canvas">
+        <img src="assets/img/generated/mapa-bg.png" alt="Vista geoespacial da floresta amazônica com rede hidrográfica e rodovia" />
+        <div class="gis__graticule"></div>
+        <span class="gis__coord gis__coord--tl">LAT −3.10  LON −60.02</span>
+        <span class="gis__coord gis__coord--br">SIRGAS 2000 · UTM 20S</span>
+        <div class="gis__scale"><span>0</span><span class="bar"></span><span>50 km</span></div>
+        <div class="gis__overlay" id="gisOverlay">
+          <button class="gis__pt" data-k="contrato" style="left:30%;top:62%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Contrato 04</b><small>BR-319 · supervisão ativa</small></span></button>
+          <button class="gis__pt" data-k="canteiro" style="left:48%;top:48%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Canteiro de obra</b><small>Trecho 2 · operacional</small></span></button>
+          <button class="gis__pt" data-k="trecho" style="left:64%;top:44%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Trecho monitorado</b><small>Segmento T3</small></span></button>
+          <button class="gis__pt" data-k="jazida" style="left:57%;top:68%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Jazida JZ-14</b><small>Em recuperação · PRAD</small></span></button>
+          <button class="gis__pt" data-k="area" style="left:75%;top:32%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Área sensível</b><small>Monitoramento de fauna</small></span></button>
+          <button class="gis__pt" data-k="trecho" style="left:40%;top:34%"><span class="ring"></span><span class="dot"></span><span class="gis__tip"><b>Trecho monitorado</b><small>Segmento T1</small></span></button>
+        </div>
+      </div>
+
+      <div class="gis__side">
+        <div class="gis__legend">
+          <h4>Legenda</h4>
+          <ul>
+            <li><span class="lg lg--contrato"></span>Contratos rodoviários</li>
+            <li><span class="lg lg--trecho"></span>Trechos monitorados</li>
+            <li><span class="lg lg--jazida"></span>Jazidas e áreas de apoio</li>
+            <li><span class="lg lg--canteiro"></span>Canteiros de obra</li>
+            <li><span class="lg lg--area"></span>Áreas ambientais sensíveis</li>
+          </ul>
+        </div>
+        <div class="gis__layers">
+          <h4>Camadas</h4>
+          <div class="gis__layer" data-layer="contrato"><span>Contratos</span><span class="sw"></span></div>
+          <div class="gis__layer" data-layer="trecho"><span>Trechos</span><span class="sw"></span></div>
+          <div class="gis__layer" data-layer="jazida"><span>Jazidas</span><span class="sw"></span></div>
+          <div class="gis__layer" data-layer="area"><span>Áreas sensíveis</span><span class="sw"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BIBLIOTECA DIGITAL ====== -->
+<section class="section section--paper" id="biblioteca">
+  <div class="container">
+    <header class="sec-head reveal" data-reveal>
+      <span class="kicker">Acervo <span class="coord">/ 08</span></span>
+      <h2 class="sec-title">Biblioteca <span class="hl">Digital</span></h2>
+      <p class="sec-lead">Acervo técnico da supervisão ambiental, reunindo programas, boletins, relatórios,
+      cartilhas, campanhas e registros institucionais.</p>
+    </header>
+
+    <div class="library">
+      <article class="book reveal" data-reveal data-cat="profras">
+        <div class="book__cover"><span class="book__pdf">PDF</span><span class="book__cat">Programa</span><h3>PROFAS</h3></div>
+        <div class="book__body">
+          <p>Programa de Rodovias Ambientalmente Sustentáveis — metodologia, escopo e diretrizes técnicas.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--prep">Em preparação</span></div>
+          <a class="book__open" href="#profras">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="book reveal" data-reveal data-cat="boletim">
+        <div class="book__cover"><span class="book__pdf">PDF</span><span class="book__cat">Boletim</span><h3>Boletins Ambientais</h3></div>
+        <div class="book__body">
+          <p>Edições periódicas com o panorama das ações de campo e indicadores de conformidade.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--pub">Publicado</span></div>
+          <a class="book__open" href="#biblioteca">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="book reveal" data-reveal data-cat="relatorio">
+        <div class="book__cover"><span class="book__pdf">PDF</span><span class="book__cat">Relatório</span><h3>Relatórios Técnicos</h3></div>
+        <div class="book__body">
+          <p>Sínteses e evidências consolidadas para apoio à fiscalização e à decisão do DNIT.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--pub">Publicado</span></div>
+          <a class="book__open" href="#biblioteca">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="book reveal" data-reveal data-cat="cartilha">
+        <div class="book__cover eco"><span class="book__pdf">PDF</span><span class="book__cat">Cartilha</span><h3>Cartilhas Ambientais</h3></div>
+        <div class="book__body">
+          <p>Educação ambiental e boas práticas para equipes, comunidades e parceiros.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--pub">Publicado</span></div>
+          <a class="book__open" href="#biblioteca">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="book reveal" data-reveal data-cat="campanha">
+        <div class="book__cover"><span class="book__pdf">PDF</span><span class="book__cat">Campanha</span><h3>Campanhas Ambientais</h3></div>
+        <div class="book__body">
+          <p>Materiais de mobilização e conscientização realizados ao longo dos trechos.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--pub">Publicado</span></div>
+          <a class="book__open" href="#biblioteca">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="book reveal" data-reveal data-cat="foto">
+        <div class="book__cover"><span class="book__pdf">ZIP</span><span class="book__cat">Registro</span><h3>Registro Fotográfico</h3></div>
+        <div class="book__body">
+          <p>Acervo visual georreferenciado das frentes de trabalho e ações ambientais.</p>
+          <div class="book__feet"><span class="book__date">Atual. 2026</span><span class="book__status book__status--pub">Publicado</span></div>
+          <a class="book__open" href="#biblioteca">Acessar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ENCERRAMENTO ====== -->
+<section class="section sec-cta" id="encerramento">
+  <div class="cta__bg" aria-hidden="true"><img src="assets/img/generated/encerramento-bg.png" alt="" /></div>
+  <div class="container cta__inner">
+    <p class="eyebrow cta__eyebrow reveal" data-reveal><span class="dot"></span> Consórcio Matupiri</p>
+    <h2 class="cta__title reveal" data-reveal>Supervisão ambiental como inteligência institucional aplicada à infraestrutura rodoviária federal na Amazônia.</h2>
+    <p class="cta__lead reveal" data-reveal>Uma plataforma permanente para integrar evidências de campo, documentos técnicos,
+    indicadores e ações ambientais em apoio à fiscalização do DNIT.</p>
+    <div class="cta__actions reveal" data-reveal>
+      <a href="#biblioteca" class="btn btn--primary">Acessar a Biblioteca Digital</a>
+      <a href="#hero" class="btn btn--ghost">Voltar ao início</a>
+    </div>
+
+    <div class="cta__panel reveal" data-reveal>
+      <div class="cta__qr">
+        <div class="qr" id="qr" aria-label="QR Code institucional"></div>
+        <small>Aponte a câmera</small>
+      </div>
+      <div class="cta__info">
+        <h4>Acesso permanente ao acervo institucional</h4>
+        <p>Plataforma para apresentações, visitas técnicas e divulgação das ações ambientais do consórcio.</p>
+        <div class="cta__contacts">
+          <span><i>▸</i> contato@consorciomatupiri.com.br</span>
+          <span><i>▸</i> Modera Engenharia · SCB BIM &amp; GIS</span>
+          <span><i>▸</i> Amazonas · Brasil</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta__meta reveal" data-reveal>
+      <span>Apresentação ao DNIT</span><span class="sep"></span>
+      <span>Meio Ambiente · Reassentamento · Superintendência</span><span class="sep"></span>
+      <span>2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="assets/img/logo-matupiri.jpeg" alt="Consórcio Matupiri" />
+      <p>Supervisão Ambiental Rodoviária</p>
+    </div>
+    <div class="footer__cols">
+      <div><h4>Plataforma</h4><a href="#ecossistema">Ecossistema</a><a href="#profras">PROFAS</a><a href="#painel">Painel Ambiental</a></div>
+      <div><h4>Conteúdo</h4><a href="#campo">Ações em Campo</a><a href="#mapa">Mapa</a><a href="#biblioteca">Biblioteca</a></div>
+      <div><h4>Consórcio</h4><span>Modera Engenharia</span><span>SCB BIM &amp; GIS</span></div>
+    </div>
+  </div>
+  <div class="footer__base container">
+    <span>© 2026 Consórcio Matupiri · Supervisão e apoio à fiscalização ambiental</span>
+    <span>DNIT · Amazonas</span>
+  </div>
+</footer>
+
+<script src="assets/js/qrcode.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
