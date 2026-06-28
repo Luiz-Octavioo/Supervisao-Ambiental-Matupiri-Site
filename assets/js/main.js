@@ -229,12 +229,156 @@
   })();
 
   /* =================================================================
+     PROGRAMAS AMBIENTAIS — seletor interativo (carrossel + painel)
+     Cards flutuantes, auto-rotação lenta com pausa ao interagir
+     ================================================================= */
+  (function () {
+    var track = document.getElementById('progsTrack');
+    if (!track) return;
+    var panel = document.getElementById('progsPanel');
+    var prevB = document.getElementById('progPrev');
+    var nextB = document.getElementById('progNext');
+    var PROGRAMS = [
+      { sig: 'PAC', name: 'Programa Ambiental da Construção', cat: 'Execução',
+        sum: 'Diretrizes ambientais para as frentes de obra.',
+        desc: 'Estabelece diretrizes ambientais para a execução das obras, orientando frentes de serviço, canteiros, equipes, controle de impactos, boas práticas e conformidade ambiental durante a construção.',
+        obj: 'Padronizar procedimentos ambientais nas frentes de serviço e reduzir impactos durante a execução das obras.',
+        rel: 'Base operacional da supervisão no dia a dia da obra.',
+        ev: ['Frentes de obra', 'Canteiros', 'Controle de impactos', 'Registros fotográficos', 'Checklists ambientais', 'Orientação às equipes'],
+        ico: '<path d="M3 21h18M5 21V8l5-3 5 3v13M9 21v-5h2v5"/>' },
+      { sig: 'PRAD', name: 'Plano de Recuperação de Áreas Degradadas', cat: 'Recuperação', eco: true,
+        sum: 'Recuperação e recomposição de áreas impactadas.',
+        desc: 'Define medidas de recuperação, recomposição e estabilização de áreas impactadas, incluindo jazidas, áreas de apoio, taludes, solos expostos e demais áreas sujeitas à degradação ambiental.',
+        obj: 'Orientar a recuperação ambiental de áreas degradadas e acompanhar a evolução das medidas de recomposição.',
+        rel: 'Acompanha a regeneração das áreas afetadas pela obra.',
+        ev: ['Jazidas', 'Áreas de apoio', 'Taludes', 'Solo exposto', 'Drenagem', 'Revegetação', 'Registros de evolução'],
+        ico: '<path d="M12 22V12M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 12c0-3-2-5-5-5 0 3 2 5 5 5z"/>' },
+      { sig: 'PGRS', name: 'Gerenciamento de Resíduos Sólidos', cat: 'Resíduos',
+        sum: 'Segregação, destinação e rastreabilidade de resíduos.',
+        desc: 'Organiza procedimentos de segregação, armazenamento, transporte, destinação e registro de resíduos gerados nas atividades de obra e apoio.',
+        obj: 'Garantir gestão adequada dos resíduos e rastreabilidade das evidências de destinação.',
+        rel: 'Garante destinação correta e rastreável dos resíduos.',
+        ev: ['Segregação', 'Armazenamento temporário', 'Transporte', 'Destinação final', 'Manifestos', 'Registros fotográficos', 'Conformidade dos pontos'],
+        ico: '<path d="M3 6h18M8 6V4h8v2M6 6l1 14h12l1-14M10 10v6M14 10v6"/>' },
+      { sig: 'EA', name: 'Educação Ambiental', cat: 'Pessoas',
+        sum: 'Sensibilização e formação ambiental de equipes.',
+        desc: 'Promove ações de sensibilização, orientação e formação ambiental junto a equipes, comunidades, trabalhadores e demais atores envolvidos.',
+        obj: 'Fortalecer a consciência ambiental e promover boas práticas durante a execução das atividades rodoviárias.',
+        rel: 'Engaja pessoas e equipes na pauta ambiental.',
+        ev: ['Campanhas', 'Palestras', 'DDS ambiental', 'Listas de presença', 'Registros fotográficos', 'Materiais educativos', 'Ações com comunidades'],
+        ico: '<path d="M12 3 2 8l10 5 10-5z"/><path d="M6 10v5c0 1 3 3 6 3s6-2 6-3v-5"/>' },
+      { sig: 'CS', name: 'Comunicação Social', cat: 'Comunidades',
+        sum: 'Diálogo com comunidades e partes interessadas.',
+        desc: 'Estrutura a comunicação com comunidades, usuários, instituições e partes interessadas, fortalecendo transparência, orientação e diálogo durante a execução das obras.',
+        obj: 'Apoiar a comunicação institucional, orientar comunidades e reduzir conflitos socioambientais.',
+        rel: 'Mantém o diálogo com comunidades e partes interessadas.',
+        ev: ['Reuniões', 'Comunicados', 'Registros de atendimento', 'Ações informativas', 'Materiais de divulgação', 'Demandas comunitárias', 'Registros de interação'],
+        ico: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>' },
+      { sig: 'MFF', name: 'Monitoramento de Fauna e Flora', cat: 'Biodiversidade', eco: true,
+        sum: 'Ocorrências, registros e proteção da biodiversidade.',
+        desc: 'Acompanha ocorrências, registros, medidas preventivas e ações associadas à proteção da biodiversidade nas áreas de influência das obras.',
+        obj: 'Registrar e apoiar ações relacionadas à fauna, flora e biodiversidade durante as atividades rodoviárias.',
+        rel: 'Protege a biodiversidade nas áreas de influência.',
+        ev: ['Avistamentos', 'Ocorrências', 'Áreas vegetadas', 'Medidas preventivas', 'Registros de fauna', 'Registros de flora', 'Recomendações técnicas'],
+        ico: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/>' },
+      { sig: 'CPE', name: 'Controle de Processos Erosivos', cat: 'Geotecnia',
+        sum: 'Prevenção e correção de erosão e drenagem.',
+        desc: 'Monitora e orienta medidas de prevenção, controle e correção de processos erosivos, drenagem inadequada, carreamento de sedimentos e instabilidade de solos.',
+        obj: 'Reduzir riscos de erosão, assoreamento, instabilidade e impactos associados à drenagem inadequada.',
+        rel: 'Previne erosão e instabilidade do terreno.',
+        ev: ['Erosões', 'Ravinas', 'Taludes', 'Drenagem', 'Sedimentos', 'Dispositivos de controle', 'Evolução das medidas'],
+        ico: '<path d="M3 20h18L14 7l-3 5-2-3z"/>' },
+      { sig: 'MRH', name: 'Monitoramento de Recursos Hídricos', cat: 'Águas', eco: true,
+        sum: 'Interferências em corpos hídricos e prevenção.',
+        desc: 'Acompanha interferências em corpos hídricos, drenagens, pontos de captação, lançamento, proteção de margens e medidas preventivas relacionadas à água.',
+        obj: 'Apoiar o controle ambiental de interferências em corpos hídricos e recursos associados.',
+        rel: 'Protege corpos hídricos e recursos associados.',
+        ev: ['Drenagens', 'Corpos hídricos', 'Pontos de captação', 'Outorgas', 'Margens', 'Assoreamento', 'Medidas preventivas'],
+        ico: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>' }
+    ];
+    var active = 0, paused = false, resumeT = null, inView = false;
+
+    PROGRAMS.forEach(function (p, i) {
+      var b = document.createElement('button');
+      b.className = 'progcard' + (p.eco ? ' progcard--eco' : '');
+      b.setAttribute('role', 'tab');
+      b.setAttribute('data-i', i);
+      b.setAttribute('aria-label', p.sig + ' — ' + p.name);
+      b.style.setProperty('--d', (i * 0.45) + 's');
+      b.innerHTML =
+        '<span class="progcard__ico"><svg viewBox="0 0 24 24">' + p.ico + '</svg></span>' +
+        '<span class="progcard__cat">' + p.cat + '</span>' +
+        '<span class="progcard__sigla">' + p.sig + '</span>' +
+        '<span class="progcard__name">' + p.name + '</span>' +
+        '<span class="progcard__sum">' + p.sum + '</span>' +
+        '<span class="progcard__sel">Selecionado</span>';
+      b.addEventListener('click', function () { setActive(i, true); });
+      b.addEventListener('focus', function () { setActive(i, true); });
+      track.appendChild(b);
+    });
+    var cards = track.querySelectorAll('.progcard');
+
+    function centerCard(i) {
+      var card = cards[i];
+      var left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+      track.scrollTo({ left: left, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    function setActive(i, user) {
+      i = (i + PROGRAMS.length) % PROGRAMS.length;
+      active = i;
+      cards.forEach(function (c, j) {
+        c.classList.toggle('is-active', j === i);
+        c.setAttribute('aria-selected', j === i ? 'true' : 'false');
+      });
+      centerCard(i);
+      var p = PROGRAMS[i];
+      panel.innerHTML =
+        '<div class="progpanel__head"><span class="progpanel__sigla">' + p.sig + '</span>' +
+        '<div><span class="progpanel__cat">' + p.cat + '</span>' +
+        '<h4 class="progpanel__name">' + p.name + '</h4></div></div>' +
+        '<p class="progpanel__desc">' + p.desc + '</p>' +
+        '<div class="progpanel__cols">' +
+        '<div class="progpanel__block"><span class="progpanel__lbl">Objetivo</span><p>' + p.obj + '</p>' +
+        '<span class="progpanel__lbl">Relação com a supervisão</span><p>' + p.rel + '</p></div>' +
+        '<div class="progpanel__block"><span class="progpanel__lbl">Evidências acompanhadas</span>' +
+        '<ul class="progpanel__ev">' + p.ev.map(function (e) { return '<li>' + e + '</li>'; }).join('') + '</ul></div>' +
+        '</div>';
+      panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+      if (user) { paused = true; clearTimeout(resumeT); resumeT = setTimeout(function () { paused = false; }, 7000); }
+    }
+
+    prevB.addEventListener('click', function () { setActive(active - 1, true); });
+    nextB.addEventListener('click', function () { setActive(active + 1, true); });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); setActive(active + 1, true); cards[active].focus(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); setActive(active - 1, true); cards[active].focus(); }
+    });
+    track.addEventListener('mouseenter', function () { paused = true; });
+    track.addEventListener('mouseleave', function () { paused = false; });
+    track.addEventListener('touchstart', function () {
+      paused = true; clearTimeout(resumeT); resumeT = setTimeout(function () { paused = false; }, 7000);
+    }, { passive: true });
+
+    var sec = document.getElementById('rara');
+    if (sec && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { inView = e.isIntersecting; });
+      }, { threshold: 0.15 }).observe(sec);
+    } else { inView = true; }
+
+    setActive(0, false);
+    if (!reduceMotion) {
+      setInterval(function () { if (!paused && inView) setActive(active + 1, false); }, 4500);
+    }
+  })();
+
+  /* =================================================================
      NAVEGAÇÃO POR SEÇÕES (deck): trilha + controle + teclado
      ================================================================= */
   (function () {
     var CH = [
       ['hero', 'Hero'], ['indicadores', 'Indicadores'], ['desafio', 'Desafio'],
-      ['ecossistema', 'Ecossistema'], ['profras', 'PROFAS'], ['painel', 'Painel Ambiental'],
+      ['ecossistema', 'Supervisão'], ['rara', 'RARA'], ['painel', 'Painel Ambiental'],
       ['campo', 'Ações em Campo'], ['mapa', 'Mapa'], ['biblioteca', 'Biblioteca'], ['encerramento', 'Encerramento']
     ];
     var els = CH.map(function (c) { return document.getElementById(c[0]); });

@@ -39,8 +39,8 @@ assets/img/generated/      → imagens institucionais geradas via Higgsfield MCP
 ```
 
 Seções, na ordem de scroll: **Hero · Indicadores · O Desafio · Ecossistema de
-Governança · PROFAS · Painel Ambiental · Ações em Campo · Mapa · Biblioteca Digital ·
-Encerramento (QR)**.
+Governança · RARA e Programas Ambientais · Painel Ambiental · Ações em Campo · Mapa ·
+Biblioteca Digital · Encerramento (QR)**.
 
 ## Personalização rápida
 
@@ -58,8 +58,8 @@ Em ambiente publicado (http/https), o QR aponta automaticamente para a própria 
 URL definitiva.
 
 ### Imagens geradas (Higgsfield) e o que substituir por material real
-O Hero, o fundo do PROFAS, a textura do Mapa e o fundo do Encerramento usam imagens
-cinematográficas **geradas via Higgsfield MCP** (`assets/img/generated/`), sem texto,
+O Hero, a capa do RARA (`rara-cover.png`), a textura do Mapa e o fundo do Encerramento usam
+imagens cinematográficas **geradas via Higgsfield MCP** (`assets/img/generated/`), sem texto,
 para servir de apoio institucional. Elas são **substituíveis** a qualquer momento.
 
 Ainda dependem de **material real do Consórcio**:
@@ -67,8 +67,8 @@ Ainda dependem de **material real do Consórcio**:
 - **Ações em Campo:** cada `.tile[data-scene="..."]` usa um placeholder em gradiente
   (`.tile__ph`) com o selo "Inserir foto real". Para usar fotos reais, troque o
   `.tile__ph` por uma `<img>` (ou aplique `background-image` no `.tile__ph`).
-- **Capa real do PROFAS / documentos da Biblioteca:** trocar as capas e ligar o botão
-  "Acessar documento PROFAS" ao PDF definitivo.
+- **RARA e documentos da Biblioteca:** trocar as capas e ligar o botão "Acessar RARA"
+  (e os cards dos Programas Ambientais) aos PDFs definitivos quando existirem.
 - **Screenshots reais do Painel Ambiental:** há área reservada na seção `#painel`.
 - **QR Code, contatos e data da apresentação:** ajustar em `main.js` e no `#encerramento`.
 
