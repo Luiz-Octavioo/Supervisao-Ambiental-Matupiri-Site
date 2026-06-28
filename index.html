@@ -288,21 +288,32 @@
       </div>
     </div>
 
-    <!-- BLOCO 2 — Programas Ambientais (seletor interativo) -->
-    <div class="progs reveal" data-reveal>
-      <div class="progs__head">
+    <!-- BLOCO 2 — Programas Ambientais (deck interativo de cartas técnicas) -->
+    <div class="deck reveal" data-reveal>
+      <div class="deck__head">
         <div>
-          <h3 class="progs__title">Programas Ambientais</h3>
-          <p class="progs__sub">Instrumentos técnicos que organizam ações, controles, monitoramentos e
-          evidências ambientais ao longo da execução das obras rodoviárias.</p>
+          <h3 class="deck__title">Programas Ambientais</h3>
+          <p class="deck__sub">Instrumentos técnicos que organizam ações, controles, monitoramentos e
+          evidências ambientais ao longo da execução das obras rodoviárias. Selecione uma carta para abrir
+          seu dossiê técnico.</p>
         </div>
-        <div class="progs__arrows">
-          <button class="progs__arrow" id="progPrev" aria-label="Programa anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button class="progs__arrow" id="progNext" aria-label="Próximo programa"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="deck__arrows">
+          <button class="deck__back" id="deckBack" hidden><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Deck</button>
+          <button class="deck__arrow" id="progPrev" aria-label="Programa anterior" hidden><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="deck__arrow" id="progNext" aria-label="Próximo programa" hidden><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
       </div>
-      <div class="progs__track" id="progsTrack" role="tablist" aria-label="Programas ambientais"><!-- cards gerados via JS --></div>
-      <div class="progs__panel" id="progsPanel" aria-live="polite"><!-- detalhe gerado via JS --></div>
+
+      <div class="deck__stage" id="deckStage">
+        <div class="deck__hand" id="deckHand"><!-- cartas (leque) via JS --></div>
+        <div class="deck__dossier" id="deckFicha" aria-live="polite" hidden><!-- dossiê via JS --></div>
+        <span class="deck__hint" id="deckHint"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Selecione uma carta para abrir o dossiê técnico</span>
+      </div>
+
+      <div class="deck__foot">
+        <div class="deck__dots" id="deckDots" role="tablist" aria-label="Programas ambientais"><!-- dots/tabs via JS --></div>
+        <span class="deck__count" id="deckCount" aria-hidden="true"></span>
+      </div>
     </div>
   </div>
 </section>

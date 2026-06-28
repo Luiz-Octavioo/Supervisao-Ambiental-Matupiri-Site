@@ -229,13 +229,20 @@
   })();
 
   /* =================================================================
-     PROGRAMAS AMBIENTAIS — seletor interativo (carrossel + painel)
-     Cards flutuantes, auto-rotação lenta com pausa ao interagir
+     PROGRAMAS AMBIENTAIS — DECK VIVO de cartas técnicas
+     Leque de cartas com vida → clicar traz a carta à frente (cresce,
+     endireita) e abre o dossiê técnico em sequência ao lado.
      ================================================================= */
   (function () {
-    var track = document.getElementById('progsTrack');
-    if (!track) return;
-    var panel = document.getElementById('progsPanel');
+    var deckEl = document.querySelector('.deck');
+    var stageEl = document.getElementById('deckStage');
+    if (!deckEl || !stageEl) return;
+    var handEl = document.getElementById('deckHand');
+    var fichaEl = document.getElementById('deckFicha');
+    var hintEl = document.getElementById('deckHint');
+    var dotsEl = document.getElementById('deckDots');
+    var countEl = document.getElementById('deckCount');
+    var backB = document.getElementById('deckBack');
     var prevB = document.getElementById('progPrev');
     var nextB = document.getElementById('progNext');
     var PROGRAMS = [
@@ -296,80 +303,203 @@
         ev: ['Drenagens', 'Corpos hídricos', 'Pontos de captação', 'Outorgas', 'Margens', 'Assoreamento', 'Medidas preventivas'],
         ico: '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>' }
     ];
-    var active = 0, paused = false, resumeT = null, inView = false;
+    var active = 0, open = false;
+    var N = PROGRAMS.length;
+    var mod = function (i) { return (i % N + N) % N; };
+    var svg = function (d) { return '<svg viewBox="0 0 24 24">' + d + '</svg>'; };
+    var ICO = {
+      obj: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+      rel: '<path d="M9 12a3 3 0 0 1 3-3h3a3 3 0 0 1 0 6M15 12a3 3 0 0 1-3 3H9a3 3 0 0 1 0-6"/>',
+      ev: '<path d="M9 3h6v3H9zM6 5h12v16H6zM9 12l2 2 4-4"/>'
+    };
+    var sel = '<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+    var mq = window.matchMedia('(max-width:940px)');
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
 
-    PROGRAMS.forEach(function (p, i) {
+    /* ----- Constrói as cartas do leque ----- */
+    var cards = PROGRAMS.map(function (p, i) {
       var b = document.createElement('button');
-      b.className = 'progcard' + (p.eco ? ' progcard--eco' : '');
-      b.setAttribute('role', 'tab');
+      b.className = 'fcard' + (p.eco ? ' is-eco' : '');
       b.setAttribute('data-i', i);
-      b.setAttribute('aria-label', p.sig + ' — ' + p.name);
-      b.style.setProperty('--d', (i * 0.45) + 's');
+      b.setAttribute('aria-label', 'Abrir dossiê técnico: ' + p.sig + ' — ' + p.name);
+      b.setAttribute('aria-expanded', 'false');
+      b.setAttribute('aria-controls', 'deckFicha');
+      b.style.setProperty('--i', i);
       b.innerHTML =
-        '<span class="progcard__ico"><svg viewBox="0 0 24 24">' + p.ico + '</svg></span>' +
-        '<span class="progcard__cat">' + p.cat + '</span>' +
-        '<span class="progcard__sigla">' + p.sig + '</span>' +
-        '<span class="progcard__name">' + p.name + '</span>' +
-        '<span class="progcard__sum">' + p.sum + '</span>' +
-        '<span class="progcard__sel">Selecionado</span>';
-      b.addEventListener('click', function () { setActive(i, true); });
-      b.addEventListener('focus', function () { setActive(i, true); });
-      track.appendChild(b);
-    });
-    var cards = track.querySelectorAll('.progcard');
-
-    function centerCard(i) {
-      var card = cards[i];
-      var left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-      track.scrollTo({ left: left, behavior: reduceMotion ? 'auto' : 'smooth' });
-    }
-    function setActive(i, user) {
-      i = (i + PROGRAMS.length) % PROGRAMS.length;
-      active = i;
-      cards.forEach(function (c, j) {
-        c.classList.toggle('is-active', j === i);
-        c.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        '<span class="fcard__inner">' +
+        '<span class="fcard__num">' + pad(i + 1) + ' / ' + pad(N) + '</span>' +
+        '<span class="fcard__ico">' + svg(p.ico) + '</span>' +
+        '<span class="fcard__cat">' + p.cat + '</span>' +
+        '<span class="fcard__sigla">' + p.sig + '</span>' +
+        '<span class="fcard__name">' + p.name + '</span>' +
+        '<span class="fcard__sum">' + p.sum + '</span>' +
+        '<span class="fcard__sel">' + sel + 'Selecionado</span>' +
+        '</span>';
+      b.addEventListener('click', function () {
+        if (open && active === i) { closeDeck(true); }
+        else { openCard(i, true); }
       });
-      centerCard(i);
-      var p = PROGRAMS[i];
-      panel.innerHTML =
-        '<div class="progpanel__head"><span class="progpanel__sigla">' + p.sig + '</span>' +
-        '<div><span class="progpanel__cat">' + p.cat + '</span>' +
-        '<h4 class="progpanel__name">' + p.name + '</h4></div></div>' +
-        '<p class="progpanel__desc">' + p.desc + '</p>' +
-        '<div class="progpanel__cols">' +
-        '<div class="progpanel__block"><span class="progpanel__lbl">Objetivo</span><p>' + p.obj + '</p>' +
-        '<span class="progpanel__lbl">Relação com a supervisão</span><p>' + p.rel + '</p></div>' +
-        '<div class="progpanel__block"><span class="progpanel__lbl">Evidências acompanhadas</span>' +
-        '<ul class="progpanel__ev">' + p.ev.map(function (e) { return '<li>' + e + '</li>'; }).join('') + '</ul></div>' +
-        '</div>';
-      panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
-      if (user) { paused = true; clearTimeout(resumeT); resumeT = setTimeout(function () { paused = false; }, 7000); }
+      handEl.appendChild(b);
+      return b;
+    });
+
+    /* ----- Dots: lista acessível com TODOS os programas (tablist) ----- */
+    PROGRAMS.forEach(function (p, i) {
+      var d = document.createElement('button');
+      d.className = 'deck__dot';
+      d.setAttribute('role', 'tab');
+      d.setAttribute('data-i', i);
+      d.setAttribute('aria-label', p.sig + ' — ' + p.name);
+      d.addEventListener('click', function () { openCard(i, true); });
+      dotsEl.appendChild(d);
+    });
+    var dots = dotsEl.querySelectorAll('.deck__dot');
+
+    /* ----- Geometria do leque / posição aberta (transforms inline) ----- */
+    function layout() {
+      if (mq.matches) {                 // mobile/tablet: CSS cuida (faixa rolável)
+        cards.forEach(function (c, j) {
+          c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = '';
+          c.classList.toggle('is-active', open && j === active);
+        });
+        return;
+      }
+      var sw = stageEl.clientWidth;
+      var cw = cards[0].offsetWidth || 230;
+      var ch = cards[0].offsetHeight || 360;
+      var cx0 = -cw / 2, cy0 = -ch / 2;                // centraliza (left/top:50%)
+      var mid = (N - 1) / 2;
+      var gap = Math.min(112, (sw - cw) / (N - 1));   // sobreposição controlada
+      var ang = 4.2;                                   // graus por carta no leque
+      // transforms em PIXELS puros (sem calc/%, interpolam de forma confiável)
+      var tf = function (x, y, r, s) {
+        return 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + r.toFixed(2) + 'deg) scale(' + s + ')';
+      };
+      cards.forEach(function (c, j) {
+        c.classList.toggle('is-active', open && j === active);
+        if (!open) {                                   // LEQUE (repouso)
+          var off = j - mid;
+          var y = Math.pow(Math.abs(off), 1.35) * 9;   // arco: bordas descem
+          c.style.transform = tf(cx0 + off * gap, cy0 + y, off * ang, 1);
+          c.style.opacity = '1';
+          c.style.zIndex = String(40 - Math.round(Math.abs(off) * 4));
+        } else {                                       // ABERTO
+          var focalX = (cw / 2 + 44) - sw / 2;          // carta à esquerda
+          if (j === active) {
+            c.style.transform = tf(cx0 + focalX, cy0, 0, 1.06);
+            c.style.opacity = '1';
+            c.style.zIndex = '60';
+          } else {                                      // resto: baralho enfileirado ATRÁS da carta ativa
+            var d = Math.min(mod(j - active), mod(active - j)); // dist. circular
+            c.style.transform = tf(cx0 + focalX - 7 - d * 5, cy0 + 12 + d * 6, -(2 + d * 1.4), 0.9);
+            c.style.opacity = d <= 2 ? (0.30 - (d - 1) * 0.12).toFixed(2) : '0'; // só 2 visíveis atrás
+            c.style.zIndex = String(40 - d);              // sempre abaixo da ativa (z 60)
+          }
+        }
+      });
     }
 
-    prevB.addEventListener('click', function () { setActive(active - 1, true); });
-    nextB.addEventListener('click', function () { setActive(active + 1, true); });
-    track.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); setActive(active + 1, true); cards[active].focus(); }
-      else if (e.key === 'ArrowLeft') { e.preventDefault(); setActive(active - 1, true); cards[active].focus(); }
+    /* ----- Render do dossiê técnico ----- */
+    function renderFicha(i) {
+      var p = PROGRAMS[i];
+      fichaEl.innerHTML =
+        '<span class="deckficha__tag"><i></i>Ficha técnica · ' + pad(i + 1) + '/' + pad(N) + '</span>' +
+        '<div class="deckficha__head"><h4 class="deckficha__name">' + p.name + '</h4>' +
+        '<span class="deckficha__cat">' + p.cat + '</span></div>' +
+        '<p class="deckficha__desc">' + p.desc + '</p>' +
+        '<div class="deckficha__cols">' +
+        '<div class="deckficha__block">' +
+        '<span class="deckficha__lbl">' + svg(ICO.obj) + 'Objetivo</span><p>' + p.obj + '</p>' +
+        '<span class="deckficha__lbl">' + svg(ICO.rel) + 'Relação com a supervisão</span><p>' + p.rel + '</p></div>' +
+        '<div class="deckficha__block">' +
+        '<span class="deckficha__lbl">' + svg(ICO.ev) + 'Evidências acompanhadas</span>' +
+        '<ul class="deckficha__ev">' + p.ev.map(function (e) { return '<li>' + e + '</li>'; }).join('') + '</ul></div>' +
+        '</div>';
+    }
+
+    /* ----- Abrir uma carta (traz à frente + abre dossiê) ----- */
+    function openCard(i, user) {
+      i = mod(i);
+      var wasOpen = open;
+      active = i; open = true;
+      deckEl.classList.add('is-open');
+
+      renderFicha(i);
+      fichaEl.hidden = false;
+      if (!reduceMotion) { fichaEl.classList.remove('is-open'); void fichaEl.offsetWidth; fichaEl.classList.add('is-open'); }
+
+      cards.forEach(function (c, j) { c.setAttribute('aria-expanded', j === i ? 'true' : 'false'); });
+      dots.forEach(function (d, j) {
+        d.classList.toggle('is-active', j === i);
+        d.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        d.setAttribute('tabindex', j === i ? '0' : '-1');
+      });
+      countEl.textContent = pad(i + 1) + ' / ' + pad(N);
+      countEl.hidden = false;
+      backB.hidden = false; prevB.hidden = false; nextB.hidden = false;
+
+      layout();
+      fitStage();
+      if (mq.matches) cards[i].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+      if (user && !wasOpen) { var nm = fichaEl.querySelector('.deckficha__name'); if (nm) { nm.setAttribute('tabindex', '-1'); } }
+    }
+
+    /* ----- Cresce o palco no desktop p/ o dossiê não invadir o rodapé ----- */
+    function fitStage() {
+      if (mq.matches || !open) { stageEl.style.minHeight = ''; return; }
+      var dh = fichaEl.offsetHeight, ch = cards[active].offsetHeight || 0;
+      stageEl.style.minHeight = (Math.max(dh, ch) + 24) + 'px';
+    }
+
+    /* ----- Voltar ao leque (deck fechado) ----- */
+    function closeDeck(user) {
+      open = false;
+      deckEl.classList.remove('is-open');
+      stageEl.style.minHeight = '';
+      fichaEl.hidden = true;
+      fichaEl.classList.remove('is-open');
+      backB.hidden = true; prevB.hidden = true; nextB.hidden = true; countEl.hidden = true;
+      cards.forEach(function (c) { c.setAttribute('aria-expanded', 'false'); });
+      layout();
+      if (user) cards[active].focus();
+    }
+
+    /* ----- Controles ----- */
+    prevB.addEventListener('click', function () { openCard(active - 1, true); });
+    nextB.addEventListener('click', function () { openCard(active + 1, true); });
+    backB.addEventListener('click', function () { closeDeck(true); });
+
+    /* teclado: setas alternam dossiês, Enter/Espaço abre, Esc volta ao leque */
+    dotsEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); openCard(active + 1, true); dots[active].focus(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); openCard(active - 1, true); dots[active].focus(); }
+      else if (e.key === 'Home') { e.preventDefault(); openCard(0, true); dots[active].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); openCard(N - 1, true); dots[active].focus(); }
     });
-    track.addEventListener('mouseenter', function () { paused = true; });
-    track.addEventListener('mouseleave', function () { paused = false; });
-    track.addEventListener('touchstart', function () {
-      paused = true; clearTimeout(resumeT); resumeT = setTimeout(function () { paused = false; }, 7000);
+    stageEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && open) { e.preventDefault(); closeDeck(true); }
+      else if (open && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+        e.preventDefault(); openCard(active + (e.key === 'ArrowRight' ? 1 : -1), true); cards[active].focus();
+      }
+    });
+
+    /* swipe lateral (mobile): troca o dossiê quando aberto */
+    var tx = 0, ty = 0;
+    stageEl.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+    stageEl.addEventListener('touchend', function (e) {
+      if (!open) return;
+      var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) openCard(active + (dx < 0 ? 1 : -1), true);
     }, { passive: true });
 
-    var sec = document.getElementById('rara');
-    if (sec && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) { inView = e.isIntersecting; });
-      }, { threshold: 0.15 }).observe(sec);
-    } else { inView = true; }
+    /* recalcula geometria em resize / troca de breakpoint */
+    var rT = null;
+    var relayout = function () { layout(); fitStage(); };
+    window.addEventListener('resize', function () { clearTimeout(rT); rT = setTimeout(relayout, 120); });
+    if (mq.addEventListener) mq.addEventListener('change', relayout); else if (mq.addListener) mq.addListener(relayout);
 
-    setActive(0, false);
-    if (!reduceMotion) {
-      setInterval(function () { if (!paused && inView) setActive(active + 1, false); }, 4500);
-    }
+    /* estado inicial: leque fechado (sem dossiê) até o primeiro clique */
+    layout();
   })();
 
   /* =================================================================
